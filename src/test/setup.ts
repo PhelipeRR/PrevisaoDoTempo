@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom'
 
 
+import { vi } from 'vitest'
+
 Object.defineProperty(global.navigator, 'geolocation', {
   value: {
     getCurrentPosition: vi.fn().mockImplementation((success) =>
