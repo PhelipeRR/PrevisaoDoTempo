@@ -25,12 +25,10 @@ export const useGeolocation = () => {
       return
     }
 
-    console.log('Requesting geolocation permission...')
     setState(prev => ({ ...prev, loading: true, error: null }))
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log('Geolocation success:', position.coords.latitude, position.coords.longitude)
         setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -53,7 +51,6 @@ export const useGeolocation = () => {
             break
         }
         
-        console.log('Geolocation error:', errorMessage)
         setState(prev => ({
           ...prev,
           error: errorMessage,
