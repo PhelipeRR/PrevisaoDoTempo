@@ -52,7 +52,6 @@ Um aplicativo moderno de previsão do tempo construído com Next.js, React Query
 
 - Node.js 18+ instalado
 - npm, yarn ou pnpm
-- ~~Chave da API~~ (não necessária com Open-Meteo)
 
 ### Instalação
 
