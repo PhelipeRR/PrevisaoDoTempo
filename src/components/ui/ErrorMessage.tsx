@@ -4,7 +4,6 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
-import { useForceUpdate } from '@/hooks/useForceUpdate'
 
 interface ErrorMessageProps {
   message: string
@@ -13,7 +12,6 @@ interface ErrorMessageProps {
 
 export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => {
   const { t } = useTranslation('common')
-  const mounted = useForceUpdate()
   
   return (
     <motion.div
@@ -33,7 +31,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) 
           whileTap={{ scale: 0.95 }}
           onClick={onRetry}
           className="flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-          title={mounted ? t('retryTooltip') : 'Try to load data again'}
+          title={t('retryTooltip')}
         >
           <RefreshCw size={16} />
           <span>Tentar novamente</span>
