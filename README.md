@@ -77,13 +77,9 @@ cp .env.local.example .env.local
 
 Edite o arquivo `.env.local` (opcional):
 ```env
-# Open-Meteo é gratuito e não requer chave de API
-# Configurações opcionais:
 # NEXT_PUBLIC_DEFAULT_CITY=São Paulo
 # NEXT_PUBLIC_DEFAULT_COUNTRY=BR
 ```
-
-### ~~Obtendo a Chave da API~~ (Não Necessário!)
 
 ✅ **Vantagem do Open-Meteo**: Não é necessário obter chave de API!
 - API completamente gratuita
@@ -152,23 +148,6 @@ src/
     └── index.tsx       # Página principal
 ```
 
-## 🎨 Design e UX
-
-### Paleta de Cores
-- **Primária**: Azul (#3B82F6) e Roxo (#8B5CF6)
-- **Secundária**: Cinza (#6B7280)
-- **Sucesso**: Verde (#10B981)
-- **Aviso**: Amarelo (#F59E0B)
-- **Erro**: Vermelho (#EF4444)
-
-### Tipografia
-- **Fonte**: Inter (Google Fonts)
-- **Tamanhos**: Escala responsiva com Tailwind
-
-### Responsividade
-- **Mobile First**: Design otimizado para dispositivos móveis
-- **Breakpoints**: sm (640px), md (768px), lg (1024px), xl (1280px)
-
 ## 🌐 Internacionalização
 
 O aplicativo suporta três idiomas:
@@ -177,20 +156,6 @@ O aplicativo suporta três idiomas:
 - **Espanhol (es)**
 
 As traduções estão localizadas em `public/locales/[idioma]/common.json`
-
-## 📱 Screenshots
-
-### Desktop - Modo Claro
-![Desktop Light Mode](./screenshots/desktop-light.png)
-
-### Desktop - Modo Escuro
-![Desktop Dark Mode](./screenshots/desktop-dark.png)
-
-### Mobile - Modo Claro
-![Mobile Light Mode](./screenshots/mobile-light.png)
-
-### Mobile - Modo Escuro
-![Mobile Dark Mode](./screenshots/mobile-dark.png)
 
 ## 🔧 Configuração Avançada
 
