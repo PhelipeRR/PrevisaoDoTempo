@@ -1,14 +1,14 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Sun, Moon, MapPin, Globe } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { MapPin, Sun, Moon, Globe } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useSettings } from '@/contexts/SettingsContext'
-import { Language } from '@/types/weather'
-import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
 import { useTranslationRefresh } from '@/contexts/TranslationContext'
+import { useTranslation } from 'next-i18next'
+import { Language } from '@/types/language'
+import { useRouter } from 'next/router'
 
 interface HeaderProps {
   onLocationClick: () => void
@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ onLocationClick }) => {
   const { units, language, setUnits, setLanguage } = useSettings()
   const { t } = useTranslation()
   const router = useRouter()
-  const [showSettings, setShowSettings] = useState(false)
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { refreshTranslations } = useTranslationRefresh()
 
@@ -36,8 +36,6 @@ export const Header: React.FC<HeaderProps> = ({ onLocationClick }) => {
     }
 
     setLanguage(newLanguage)
-    setShowSettings(false)
-
 
     const newUrl = `/${newLanguage}${router.asPath === '/' ? '' : router.asPath}`
     window.location.href = newUrl
@@ -47,103 +45,109 @@ export const Header: React.FC<HeaderProps> = ({ onLocationClick }) => {
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border-b border-white/20 dark:border-gray-700/50"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-
-          <div className="flex items-center space-x-3">
-            <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
-              <Sun className="text-white" size={24} />
-            </div>
-            <h1 className="text-xl font-bold text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="text-xl sm:text-2xl">🌤️</div>
+            <h1 className="text-lg sm:text-xl font-bold text-white truncate">
               {mounted ? t('title') : 'Weather Forecast'}
             </h1>
           </div>
 
 
-          <div className="flex items-center space-x-2">
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            {/* Botão de localização - sempre visível */}
+            <button
               onClick={onLocationClick}
-              className="p-2 rounded-lg bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 text-white transition-colors backdrop-blur-sm border border-white/20 dark:border-gray-600/50"
-              title={mounted ? t('currentLocation') : 'Current Location'}
+              className="flex items-center justify-center p-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors backdrop-blur-sm border border-white/20"
+              title={mounted ? t('getCurrentLocationTooltip') : 'Get weather forecast for your current location'}
             >
-              <MapPin size={20} />
-            </motion.button>
-
-
-            <div className="flex bg-white/10 dark:bg-gray-700/50 rounded-lg p-1 backdrop-blur-sm border border-white/20 dark:border-gray-600/50">
+              <MapPin size={16} />
+            </button>
+            
+            {/* Seletor de unidade - compacto no mobile */}
+            <div className="flex bg-white/20 rounded-lg p-0.5 backdrop-blur-sm border border-white/20">
               <button
                 onClick={() => setUnits('metric')}
-                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${units === 'metric'
-                    ? 'bg-white/30 dark:bg-gray-600/50 text-white'
+                className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  units === 'metric'
+                    ? 'bg-white/30 text-white'
                     : 'text-white/70 hover:text-white'
-                  }`}
+                }`}
+                title={mounted ? t('celsiusTooltip') : 'Switch to Celsius'}
               >
                 °C
               </button>
               <button
                 onClick={() => setUnits('imperial')}
-                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${units === 'imperial'
-                    ? 'bg-white/30 dark:bg-gray-600/50 text-white'
+                className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  units === 'imperial'
+                    ? 'bg-white/30 text-white'
                     : 'text-white/70 hover:text-white'
-                  }`}
+                }`}
+                title={mounted ? t('fahrenheitTooltip') : 'Switch to Fahrenheit'}
               >
                 °F
               </button>
             </div>
-
-
-            <div className="relative z-[99999]" style={{ zIndex: 99999 }}>
+            
+            {/* Seletor de idioma - dropdown compacto */}
+            <div className="relative">
               <button
-                onClick={() => setShowSettings(!showSettings)}
-                className="p-2 rounded-lg bg-white/10 dark:bg-gray-700/50 hover:bg-white/20 dark:hover:bg-gray-600/50 transition-colors backdrop-blur-sm border border-white/20 dark:border-gray-600/50"
+                onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                className="flex items-center justify-center p-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors backdrop-blur-sm border border-white/20"
+                title={mounted ? t('languageTooltip') : 'Select language'}
               >
-                <Globe size={20} className="text-white" />
+                <Globe size={16} />
               </button>
-
-              {showSettings && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute right-0 mt-2 w-32 bg-white/10 dark:bg-gray-800/90 backdrop-blur-md rounded-lg shadow-lg border border-white/20 dark:border-gray-600/50 z-50"
-                >
-                  <div className="py-1">
-                    {(['pt', 'en', 'es'] as Language[]).map((lang) => (
-                      <button
-                        key={lang}
-                        onClick={() => handleLanguageChange(lang)}
-                        className={`w-full text-left px-4 py-2 text-sm hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors ${language === lang
-                            ? 'bg-white/30 dark:bg-gray-600/50 text-white'
-                            : 'text-white/70'
+              
+              <AnimatePresence>
+                {showLanguageDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    className="absolute right-0 mt-2 w-28 bg-white/95 backdrop-blur-md rounded-lg shadow-lg border border-white/30 z-50"
+                  >
+                    <div className="py-1">
+                      {(['pt', 'en', 'es'] as const).map((lang) => (
+                        <button
+                          key={lang}
+                          onClick={() => {
+                            handleLanguageChange(lang)
+                            setShowLanguageDropdown(false)
+                          }}
+                          className={`w-full text-left px-3 py-2 text-xs hover:bg-blue-50 transition-colors ${
+                            language === lang
+                              ? 'bg-blue-100 text-blue-900 font-medium'
+                              : 'text-gray-700'
                           }`}
-                      >
-                        {lang === 'pt' ? 'Português' : lang === 'en' ? 'English' : 'Español'}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+                        >
+                          {lang === 'pt' ? 'PT' : lang === 'en' ? 'EN' : 'ES'}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            
+            {/* Botão de tema */}
+            <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-white/10 dark:bg-gray-700/50 hover:bg-white/20 dark:hover:bg-gray-600/50 transition-colors backdrop-blur-sm border border-white/20 dark:border-gray-600/50"
+              className="flex items-center justify-center p-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors backdrop-blur-sm border border-white/20"
+              title={mounted ? (theme === 'light' ? t('darkMode') : t('lightMode')) : 'Toggle theme'}
             >
               {!mounted ? (
-                <Sun size={20} className="text-white" />
+                <Sun size={16} />
               ) : theme === 'light' ? (
-                <Moon size={20} className="text-white" />
+                <Moon size={16} />
               ) : (
-                <Sun size={20} className="text-white" />
+                <Sun size={16} />
               )}
-            </motion.button>
+            </button>
           </div>
         </div>
       </div>

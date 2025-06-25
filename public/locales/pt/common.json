@@ -99,5 +99,14 @@
     "high": "Alto",
     "veryHigh": "Muito Alto",
     "extreme": "Extremo"
-  }
+  },
+  "clearSearch": "Limpar pesquisa",
+  "getCurrentLocationTooltip": "Obter previsão do tempo para sua localização atual",
+  "celsiusTooltip": "Exibir temperatura em Celsius",
+  "fahrenheitTooltip": "Exibir temperatura em Fahrenheit",
+  "language": "Idioma",
+  "languageTooltip": "Selecionar idioma",
+  "darkMode": "Modo escuro",
+  "lightMode": "Modo claro",
+  "retryTooltip": "Tentar carregar os dados novamente"
 }

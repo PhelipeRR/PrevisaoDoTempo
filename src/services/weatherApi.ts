@@ -182,7 +182,7 @@ export const weatherApi = {
       },
       timezone: 0,
       id: 0,
-      name: 'Localização Atual',
+      name: '',
       cod: 200
     }
   },
@@ -240,7 +240,7 @@ export const weatherApi = {
       list,
       city: {
         id: 0,
-        name: 'Localização Atual',
+        name: '',
         coord: { lat, lon },
         country: 'BR',
         population: 0,

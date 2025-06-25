@@ -89,18 +89,18 @@ export default function Home() {
       <div className="min-h-screen">
         <Header onLocationClick={handleLocationClick} />
       
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-16 sm:mt-20">
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-4"
+          className="mb-6"
         >
           <CitySearch onCitySelect={handleCitySelect} className="max-w-md mx-auto" />
         </motion.div>
 
 
-        <div className="space-y-4">
+        <div className="space-y-4 sm:space-y-6">
           {isLoading && (
             <Loading message={mounted ? t('loading') : 'Loading...'} />
           )}
@@ -116,7 +116,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="space-y-3"
+              className="space-y-4 sm:space-y-6"
             >
   
               <CurrentWeather
@@ -136,17 +136,18 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-12"
             >
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/20 max-w-md mx-auto text-center">
-                <div className="text-6xl mb-4">🌤️</div>
-                <h2 className="text-2xl font-bold text-white mb-4">
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20 max-w-md mx-auto text-center">
+                <div className="text-5xl sm:text-6xl mb-4">🌤️</div>
+                <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
                   Bem-vindo ao {mounted ? t('title') : 'Weather Forecast'}
                 </h2>
-                <p className="text-white/80 mb-6">
+                <p className="text-sm sm:text-base text-white/80 mb-6">
                   Permita o acesso à sua localização ou busque por uma cidade para ver a previsão do tempo.
                 </p>
                 <button
                   onClick={getCurrentPosition}
-                  className="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-lg font-medium transition-colors backdrop-blur-sm border border-white/20"
+                  className="bg-white/20 hover:bg-white/30 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors backdrop-blur-sm border border-white/20 text-sm sm:text-base"
+                  title={mounted ? t('getCurrentLocationTooltip') : 'Get weather for your current location'}
                 >
                   {mounted ? t('currentLocation') : 'Current Location'}
                 </button>
