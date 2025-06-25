@@ -6,11 +6,7 @@ Um aplicativo moderno de previsão do tempo construído com Next.js, React Query
 
 - 🌍 **Detecção automática de localização** via navegador
 - 🔍 **Busca de cidades** com autocomplete
-- 🌡️ **Informações meteorológicas completas**:
-  - Temperatura atual e sensação térmica
-  - Umidade, pressão atmosférica e visibilidade
-  - Velocidade e direção do vento
-  - Horários do nascer e pôr do sol
+- 🌡️ **Informações meteorológicas **:
 - 📊 **Previsão estendida** de 5 dias
 - 📈 **Previsão por hora** para o dia atual
 - 🌓 **Modo escuro/claro** com persistência
