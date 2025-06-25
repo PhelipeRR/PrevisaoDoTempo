@@ -58,7 +58,7 @@ Um aplicativo moderno de previsão do tempo construído com Next.js, React Query
 1. **Clone o repositório**
 ```bash
 git clone https://github.com/seu-usuario/PrevisaoDoTempo.git
-cd previsao-do-tempo
+cd PrevisaoDoTempo
 ```
 
 2. **Instale as dependências**
