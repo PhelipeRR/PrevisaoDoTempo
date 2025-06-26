@@ -20,6 +20,7 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data, cityName }
   const router = useRouter()
   const { units } = useSettings()
   const [currentDate, setCurrentDate] = useState<string>('')
+  const [currentTime, setCurrentTime] = useState<string>('')
   const [sunriseTime, setSunriseTime] = useState<string>('')
   const [sunsetTime, setSunsetTime] = useState<string>('')
   const [mounted, setMounted] = useState(false)
@@ -54,6 +55,20 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data, cityName }
     setSunriseTime(formatTime(data.sys.sunrise, data.timezone))
     setSunsetTime(formatTime(data.sys.sunset, data.timezone))
   }, [data.sys.sunrise, data.sys.sunset, data.timezone])
+
+  useEffect(() => {
+    const updateCurrentTime = () => {
+      const now = new Date()
+      const hours = now.getHours().toString().padStart(2, '0')
+      const minutes = now.getMinutes().toString().padStart(2, '0')
+      setCurrentTime(`${hours}:${minutes}`)
+    }
+
+    updateCurrentTime() // Set initial time
+    const interval = setInterval(updateCurrentTime, 1000) // Update every second
+
+    return () => clearInterval(interval) // Cleanup on unmount
+  }, [])
 
   const weatherCards = [
     {
@@ -141,7 +156,7 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data, cityName }
             {currentDate}
           </p>
           <p className="text-xs sm:text-sm text-blue-200 mt-1 font-light">
-            12:37
+            {currentTime}
           </p>
         </div>
 
